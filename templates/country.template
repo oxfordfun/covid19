@@ -1,0 +1,26 @@
+
+{% extends "base.template" %}
+
+{% block head%}
+    <script src="/static/scripts/d3.v5.min.js"></script>
+    <link href="/static/css/c3.min.css" rel="stylesheet">
+    <script src="/static/scripts/c3.min.js"></script>
+{% endblock %}
+
+{% block content %}
+   <h1>{{ country }}</h1>
+   <hr>
+   {% for case in cases %}
+      {{ case['year_week'] }}:{{ case['weekly_count']}}
+   {% endfor %}
+   <hr>
+   
+   {% for case in deaths %}
+      {{ case['year_week'] }}:{{ case['weekly_count']}}
+   {% endfor %}
+  
+{% endblock content %}
+
+{% block scripts %}
+   <script src="/static/scripts/jquery.tablesorter.js"></script>
+{% endblock scripts %}

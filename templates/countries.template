@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-   <h1>All Countries</h1>
+   <h1>Country Summary</h1>
    <hr>
   <div class="form-group form-inline">
     <label for="promt">Search country</label>

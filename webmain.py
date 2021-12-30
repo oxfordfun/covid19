@@ -9,10 +9,17 @@ from reducer import Reducer
 app = Flask(__name__)
 
 @app.route("/countries")
-
-def get_country():
+def get_countries():
     return render_template(
         "countries.template", counts = reducer.counts
+    )
+
+@app.route("/country/<country>")
+def get_country(country):
+    cases = mapper.country_cases[country]
+    deaths = mapper.country_deaths[country]
+    return render_template(
+        "country.template", cases = cases, deaths = deaths, country = country
     )
 
 if __name__ == "__main__":
