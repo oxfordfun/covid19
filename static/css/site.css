@@ -1,0 +1,118 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+input{
+    padding-left: 0px;
+}
+
+.navbar-inverse {
+    background-color:  darkorange;
+}
+
+.navbar-inverse .navbar-brand{
+    color: #000
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #000
+}
+
+textarea {
+    max-width: 1000px;
+    font-size:12px;
+}
+
+table {
+    max-width: 100%;
+    font-size:14px;
+}
+
+.table tbody>tr>td {
+    padding: 3px;
+}
+
+.jumbotron h1 {
+    color: darkorange;
+}
+
+p {
+    color: black;
+}
+
+
+#annotation_id #annotation_detail {
+    visibility: hidden;
+}
+
+.annotation_hidden {
+    visibility: hidden;
+}
+
+.alert{
+    background-color:white;
+    color: darkorange;
+}
+
+.alert-success {
+    background-color: darkorange;
+    color: white;
+}
+
+.btn-danger {
+    background-color: darkorange;
+}
+
+p {
+    margin: 10px 0 10px 0;
+}
+
+.container {
+    max-width: 1400px;
+}
+
+#body-container {
+    max-width: 1400px;
+    display: grid;
+    align-items: center;
+}
+
+.chart_div {
+    height: 300px;
+}
+
+.col-md-6, .col-md-8, .col-md-4, .col-md-12 {
+    padding: 0px;
+}
+
+img{
+    margin: 5px;
+}
+
+.total_deaths{
+    color: darkred;
+}
+.total_cases{
+    color: darkblue;
+}

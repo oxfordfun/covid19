@@ -13,12 +13,13 @@ class Reducer:
             deaths_records - [{country-weekly-record}*]
         output:
             counts - 
-                { 'deaths': number-of-death, 
+                { 'continent': continent,
+                  'deaths': number-of-death, 
                   'cases': number-of-cases, 
                   'mortality': number-of-mortality, 
                   'infection': infection-rate, 
                   'population': population, 
-                  'week': year-week
+                  'week': year-week,
                   }
         '''
         counts = {}
@@ -31,9 +32,11 @@ class Reducer:
                 counts[country]['cases'] = counts[country]['cases'] + cases
                 population = record['population']
                 week = record['year_week']
+                continent = record['continent']
             counts[country]['population'] = population
             counts[country]['infection'] = round(counts[country]['cases'] / population * 100 ,2)
             counts[country]['week'] = week
+            counts[country]['continent'] = continent
 
         for country, records in self.deaths_records.items():
             counts[country]['deaths'] = 0

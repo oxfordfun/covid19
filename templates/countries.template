@@ -1,0 +1,52 @@
+
+{% extends "base.template" %}
+
+{% block head%}
+    <script src="/static/scripts/d3.v5.min.js"></script>
+    <link href="/static/css/c3.min.css" rel="stylesheet">
+    <script src="/static/scripts/c3.min.js"></script>
+{% endblock %}
+
+{% block content %}
+   <h1>All Countries</h1>
+   <hr>
+  <div class="form-group form-inline">
+    <label for="promt">Search country</label>
+    <input type="text" class="form-control" id="search_summary" placeholder="Type to search country"><span id="summarycount"> {{ countries | length}} countries</span>
+  </div>
+   <table class="table table-bordered table-dark" id="summary_table">
+   <thead>
+    <tr>
+      <th scope="col"><a href="#">#</a></th>
+      <th scope="col"><a href="#">Country</a></th>
+      <th scope="col"><a href="#">Population</a></th>
+      <th scope="col"><a href="#">Cases</a></th>
+      <th scope="col"><a href="#">Infection</a></th>
+      <th scope="col"><a href="#">Deaths</a></th>
+      <th scope="col"><a href="#">Mortality</a></th>
+      <th scope="col"><a href="#">Year-Week</a></th>
+      <th scope="col"><a href="#">Continent</a></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for country, country_data in counts.items() %}
+      <tr>
+        <td scope="col"> {{loop.index}}</td>
+        <td scope="col"><a href="/country/{{ country }}">{{ country }}</a></td>
+        <td scope="col">{{ "{:,}".format(country_data['population']) }}</td>
+        <td scope="col">{{ "{:,}".format(country_data['cases']) }}</td>
+        <td scope="col">{{ country_data['infection'] }}</td>
+        <td scope="col">{{ "{:,}".format(country_data['deaths']) }}</td>
+        <td scope="col">{{ country_data['mortality'] }}</td>
+        <td scope="col">{{ country_data['week'] }}</td>
+        <td scope="col"><a href="#">{{ country_data['continent'] }}</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
+
+{% block scripts %}
+   <script src="/static/scripts/jquery.tablesorter.js"></script>
+   <script src="/static/scripts/app/countries.js"></script>
+{% endblock scripts %}
