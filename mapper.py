@@ -2,7 +2,10 @@
 # map raw data to country data
 
 class Mapper:
-    def map_continent(self, data, continent = 'all'):
+    def __init__(self, data):
+        self.data = data
+
+    def map_continent(self, continent = 'all'):
         '''
         input:
             data
@@ -27,7 +30,7 @@ class Mapper:
         country_cases = []
         country_deaths = []
 
-        for record in data:
+        for record in self.data:
             country = record['country']
 
             if continent in ['Europe', 'Asia', 'America', 'Africa', 'Oceania']:
@@ -58,4 +61,5 @@ class Mapper:
                 else:
                     country_combined_deaths[country].append(record)
 
-        return country_combined_cases, country_combined_deaths
+        self.country_cases = country_combined_cases
+        self.country_deaths = country_combined_deaths

@@ -16,16 +16,18 @@ if __name__ == "__main__":
     
     # mapped to country
 
-    mapper = Mapper()
-    if sys.argv[2]:
+    mapper = Mapper(data)
+    if len(sys.argv) > 2:
         query_continent = sys.argv[2]
-        country_cases, country_deaths = mapper.map_continent(data, query_continent)
+        mapper.map_continent(query_continent)
+    else:
+         mapper.map_continent()
     
     # get stats of each country
-    reducer = Reducer()
-    country_stats = reducer.count_country(country_cases, country_deaths)
+    reducer = Reducer(mapper.country_cases, mapper.country_deaths)
+    reducer.count_country()
 
-    output_json = json.dumps(country_stats, indent=4)
+    output_json = json.dumps(reducer.counts, indent=4)
 
     print(output_json)
     
