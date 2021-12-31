@@ -14,6 +14,11 @@ def get_countries():
         "countries.template", counts = reducer.counts
     )
 
+@app.route("/get_country/<country>")
+def proxy_get_country(country):
+    data = mapper.fit_country(country)
+    return json.dumps(data)
+
 @app.route("/country/<country>")
 def get_country(country):
     cases = mapper.country_cases[country]

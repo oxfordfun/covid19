@@ -25,11 +25,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/countries">ViewCovid19</a>
+          <a class="navbar-brand" href="/country/United%20Kingdom">ViewCovid19</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/countries">Summary</a></li>  
+            <li><a href="/countries">World</a></li>  
 	        </ul>
 	      </div>
       </div>
