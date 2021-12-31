@@ -29,7 +29,7 @@ def get_country(country):
 
 if __name__ == "__main__":
     global data, mapper, reducer
-    with open('data/2021-51.json') as reader:
+    with open('data.json') as reader:
         data = json.loads(reader.read())
     mapper = Mapper(data)
     mapper.map_continent()
@@ -37,4 +37,4 @@ if __name__ == "__main__":
     reducer = Reducer(mapper.country_cases, mapper.country_deaths)
     reducer.count_country()
 
-    app.run(host="127.0.0.1", port=3322)
+    app.run(host="127.0.0.1", port=6060)
