@@ -104,23 +104,23 @@ class Mapper:
         cases_axis  = [int(y) for y in sorted_cases.values()]
 
         deaths_trend =  deaths_axis
-        if len(deaths_axis)>7:
-            deaths_trend = self.moving_average(deaths_axis, 7)
+        if len(deaths_axis) > 4:
+            deaths_trend = self.moving_average(deaths_axis, 4)
 
         cases_trend = cases_axis
-        if len(cases_trend) > 7:
-            cases_trend = self.moving_average(cases_axis,7)
+        if len(cases_trend) > 4:
+            cases_trend = self.moving_average(cases_axis, 4)
 
-        x_last7 = [x for x in range(7)]
-        last_7_week_deaths =  deaths_axis[-7:]
-        last_7_week_cases =  cases_axis[-7:]
+        x_last4 = [x for x in range(4)]
+        last_4_week_deaths =  deaths_axis[-4:]
+        last_4_week_cases =  cases_axis[-4:]
         
-        if len(last_7_week_cases) == 7 and len(last_7_week_deaths) == 7:
-            fitted_last7_deaths = pf(x_last7, last_7_week_deaths, 1)
-            fitted_last7_cases = pf(x_last7, last_7_week_cases, 1)
+        if len(last_4_week_cases) == 4 and len(last_4_week_deaths) == 4:
+            fitted_last4_deaths = pf(x_last4, last_4_week_deaths, 1)
+            fitted_last4_cases = pf(x_last4, last_4_week_cases, 1)
         else:
-            fitted_last7_deaths = [0,0]
-            fitted_last7_cases = [0,0]
+            fitted_last4_deaths = [0,0]
+            fitted_last4_cases = [0,0]
 
 
         result = {}
@@ -130,9 +130,9 @@ class Mapper:
         result['totalcases'] = sum(cases_axis)
         result['deaths_trend'] = deaths_trend
         result['cases_trend'] = cases_trend
-        result['death_grow'] = round(fitted_last7_deaths[0],0)
-        result['case_grow'] = round(fitted_last7_cases[0],0)
-        result['last7deaths'] = last_7_week_deaths
-        result['last7cases'] = last_7_week_cases
+        result['death_grow'] = round(fitted_last4_deaths[0],0)
+        result['case_grow'] = round(fitted_last4_cases[0],0)
+        result['last4deaths'] = last_4_week_deaths
+        result['last4cases'] = last_4_week_cases
     
         return result

@@ -7,11 +7,17 @@ $(document).ready(function () {
     }
     getData(country_url).then((data) => {
       datesD = ['date'];
-      number_of_countriesD = ['deaths'];
+      number_of_countriesD = ['weekly_deaths'];
   
       for (const [key, value] of Object.entries(data['deaths'])){
         datesD.push(key);
         number_of_countriesD.push(value);
+      }
+
+      dots_deaths = ['last4weeks_average'] 
+
+      for (const [key, value] of Object.entries(data['deaths_trend'])){
+        dots_deaths.push(value);
       }
   
     var chart = c3.generate({
@@ -20,14 +26,15 @@ $(document).ready(function () {
         x: 'date',
         columns: [
           datesD,
-          number_of_countriesD
+          number_of_countriesD,
+          dots_deaths
         ],
         types: {
-          'deaths': 'area',
+          'weekly_deaths': 'area',
           'deaths_trend': 'spline',
         },
         colors:{
-          'deaths': '#ff0000',
+          'weekly_deaths': '#ff0000',
           'deaths_trend': 'darkorange',
         }
       },
@@ -46,11 +53,17 @@ $(document).ready(function () {
     });
   
     datesC = ['date'];
-    number_of_countriesC = ['cases'];
+    number_of_countriesC = ['weekly_cases'];
   
     for (const [key, value] of Object.entries(data['cases'])){
       datesC.push(key);
       number_of_countriesC.push(value);
+    }
+
+    dots_cases = ['last4weeks_average'] 
+
+    for (const [key, value] of Object.entries(data['cases_trend'])){
+       dots_cases.push(value);
     }
   
     var chart = c3.generate({
@@ -59,14 +72,15 @@ $(document).ready(function () {
         x: 'date',
         columns: [
           datesC,
-          number_of_countriesC
+          number_of_countriesC,
+          dots_cases
         ],
         types: {
-          'cases':'area',
+          'weekly_cases':'area',
           'cases_trend':'spline'
         },
         colors:{
-          'cases': '#0000ff',
+          'weekly_cases': '#0000ff',
           'cases_trend': 'darkorange',
         }
       },
