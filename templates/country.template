@@ -10,12 +10,19 @@
 
 {% block content %}
    <h2>{{ country }}</h2> <span id="country_id" hidden>{{ country }}</span>
-   <hr>
+   <div>Last updated week: <strong> {{ counts['week'] }}</strong> from <a href='https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19'>ECDC</a></div>
+    <p>
+    <span class="total_deaths">Total deaths: <strong>{{ "{:,}".format(counts['deaths']) }}</strong></span>
+    <span class="total_deaths">Mortality: <strong>{{ counts["mortality"] }}</strong></span>    
+    </p>
+    <div>
+    <span class="total_cases">Total cases: <strong>{{ "{:,}".format(counts['cases']) }}</strong></span>
+    <span class="total_cases">Infection rate: <strong>{{ counts["infection"] }}</strong></span>  
+    </div>
+    <p>Population: <strong>{{ "{:,}".format(counts['population']) }}</strong></p>
 
    <div id="chart_deaths" class="chart_div"></div>
-
    <hr>
-   
    <div id="chart" class="chart_div"></div>
   
 {% endblock content %}

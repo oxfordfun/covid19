@@ -24,7 +24,11 @@ def get_country(country):
     cases = mapper.country_cases[country]
     deaths = mapper.country_deaths[country]
     return render_template(
-        "country.template", cases = cases, deaths = deaths, country = country
+        "country.template", 
+        cases = cases, 
+        deaths = deaths, 
+        country = country,
+        counts = reducer.counts[country]
     )
 
 if __name__ == "__main__":

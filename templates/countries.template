@@ -9,7 +9,6 @@
 
 {% block content %}
    <h2>World Summary</h2>
-   <hr>
   <div class="form-group form-inline">
     <label for="promt">Search country</label>
     <input type="text" class="form-control" id="search_summary" placeholder="Type to search country"><span id="summarycount"> {{ countries | length}} countries</span>
@@ -36,7 +35,7 @@
         <td scope="col">{{ "{:,}".format(country_data['population']) }}</td>
         <td scope="col">{{ "{:,}".format(country_data['cases']) }}</td>
         <td scope="col">{{ country_data['infection'] }}</td>
-        <td scope="col">{{ "{:,}".format(country_data['deaths']) }}</td>
+        <td scope="col"><span class='total_deaths'>{{ "{:,}".format(country_data['deaths']) }}</span></td>
         <td scope="col">{{ country_data['mortality'] }}</td>
         <td scope="col">{{ country_data['week'] }}</td>
         <td scope="col"><a href="#">{{ country_data['continent'] }}</a></td>
