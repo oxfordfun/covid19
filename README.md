@@ -13,11 +13,19 @@ wget https://opendata.ecdc.europa.eu/covid19/nationalcasedeath/json -O data.json
 ```
 
 ## Install dependencies in a virtual environment
+Ubuntu
 ```
 virtualenv -p python3 env
 source env/bin/activate
 pip3 install -r requirements.txt
 ```
+Windows
+```
+python -m venv myenv
+.\myenv\Scripts\activate
+pip3 install -r .\requirements.txt 
+```
+
 # Run it
 ## Command
 Show World data
@@ -34,7 +42,7 @@ python3 main.py data.json Europe > data/europe.json
 
 ## Web
 ```
-python3 webmain.py data.json 
+python3 webmain.py
 ```
 Data shown at http://127.0.0.1:6060/countries
 
