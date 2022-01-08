@@ -1,6 +1,7 @@
 # covid19 mapper
 # map raw data to country data
 
+
 class Mapper:
     def __init__(self, data):
         self.data = data
@@ -24,8 +25,8 @@ class Mapper:
 
         return last_n_average
 
-    def map_continent(self, continent = 'all'):
-        '''
+    def map_continent(self, continent="all"):
+        """
         input:
             data
 
@@ -44,66 +45,78 @@ class Mapper:
         output:
             country_combined_cases - [{'{country}': [{country-weekly-case}}*]]
             country_combined_deaths - [{'{country}': [{country-weekly-death}}*]]
-        '''
+        """
 
         country_cases = []
         country_deaths = []
 
         for record in self.data:
-            country = record['country']
+            country = record["country"]
 
-            if continent in ['Europe', 'Asia', 'America', 'Africa', 'Oceania']:
-                if record['continent'] == continent:
-                    if record['indicator'] == 'cases':
-                        country_cases.append((country,record))
-                    if record['indicator'] == 'deaths':
+            if continent in ["Europe", "Asia", "America", "Africa", "Oceania"]:
+                if record["continent"] == continent:
+                    if record["indicator"] == "cases":
+                        country_cases.append((country, record))
+                    if record["indicator"] == "deaths":
                         country_deaths.append((country, record))
             else:
-                if record['indicator'] == 'cases':
-                        country_cases.append((country,record))
-                if record['indicator'] == 'deaths':
-                        country_deaths.append((country, record))
-        
+                if record["indicator"] == "cases":
+                    country_cases.append((country, record))
+                if record["indicator"] == "deaths":
+                    country_deaths.append((country, record))
+
         country_combined_cases = {}
 
         for country, record in country_cases:
-                if country not in country_combined_cases.keys():
-                    country_combined_cases[country] = [record]
-                else:
-                    country_combined_cases[country].append(record)
+            if country not in country_combined_cases.keys():
+                country_combined_cases[country] = [record]
+            else:
+                country_combined_cases[country].append(record)
 
         country_combined_deaths = {}
 
         for country, record in country_deaths:
-                if country not in country_combined_deaths.keys():
-                    country_combined_deaths[country] = [record]
-                else:
-                    country_combined_deaths[country].append(record)
+            if country not in country_combined_deaths.keys():
+                country_combined_deaths[country] = [record]
+            else:
+                country_combined_deaths[country].append(record)
 
         self.country_cases = country_combined_cases
         self.country_deaths = country_combined_deaths
-    
+
     def fit_country(self, country):
         country_day_deaths = {}
         country_day_cases = {}
 
         for record in self.country_cases[country]:
-            country_day_cases[record['year_week']] = record['weekly_count']
-        
+            if "weekly_count" in record.keys():
+                country_day_cases[record["year_week"]] = record["weekly_count"]
+            else:
+                country_day_cases[record["year_week"]] = 0
+
         for record in self.country_deaths[country]:
-            country_day_deaths[record['year_week']] = record['weekly_count']
+            if "weekly_count" in record.keys():
+                country_day_deaths[record["year_week"]] = record["weekly_count"]
+            else:
+                country_day_deaths[record["year_week"]] = 0
 
         import datetime
 
-        sorted_deaths = {k: v for k, v in sorted(country_day_deaths.items(), key=lambda item: item[0])}
-        sorted_cases =  {k: v for k, v in sorted(country_day_cases.items(), key=lambda item: item[0])}
+        sorted_deaths = {
+            k: v
+            for k, v in sorted(country_day_deaths.items(), key=lambda item: item[0])
+        }
+        sorted_cases = {
+            k: v for k, v in sorted(country_day_cases.items(), key=lambda item: item[0])
+        }
 
         from numpy import polyfit as pf
+
         x_axis = [x for x in range(len(sorted_deaths.keys()))]
         deaths_axis = [int(y) for y in sorted_deaths.values()]
-        cases_axis  = [int(y) for y in sorted_cases.values()]
+        cases_axis = [int(y) for y in sorted_cases.values()]
 
-        deaths_trend =  deaths_axis
+        deaths_trend = deaths_axis
         if len(deaths_axis) > 4:
             deaths_trend = self.moving_average(deaths_axis, 4)
 
@@ -112,27 +125,26 @@ class Mapper:
             cases_trend = self.moving_average(cases_axis, 4)
 
         x_last4 = [x for x in range(4)]
-        last_4_week_deaths =  deaths_axis[-4:]
-        last_4_week_cases =  cases_axis[-4:]
-        
+        last_4_week_deaths = deaths_axis[-4:]
+        last_4_week_cases = cases_axis[-4:]
+
         if len(last_4_week_cases) == 4 and len(last_4_week_deaths) == 4:
             fitted_last4_deaths = pf(x_last4, last_4_week_deaths, 1)
             fitted_last4_cases = pf(x_last4, last_4_week_cases, 1)
         else:
-            fitted_last4_deaths = [0,0]
-            fitted_last4_cases = [0,0]
-
+            fitted_last4_deaths = [0, 0]
+            fitted_last4_cases = [0, 0]
 
         result = {}
-        result['deaths'] = sorted_deaths
-        result['totaldeaths'] = sum(deaths_axis)
-        result['cases']  = sorted_cases
-        result['totalcases'] = sum(cases_axis)
-        result['deaths_trend'] = deaths_trend
-        result['cases_trend'] = cases_trend
-        result['death_grow'] = round(fitted_last4_deaths[0],0)
-        result['case_grow'] = round(fitted_last4_cases[0],0)
-        result['last4deaths'] = last_4_week_deaths
-        result['last4cases'] = last_4_week_cases
-    
+        result["deaths"] = sorted_deaths
+        result["totaldeaths"] = sum(deaths_axis)
+        result["cases"] = sorted_cases
+        result["totalcases"] = sum(cases_axis)
+        result["deaths_trend"] = deaths_trend
+        result["cases_trend"] = cases_trend
+        result["death_grow"] = round(fitted_last4_deaths[0], 0)
+        result["case_grow"] = round(fitted_last4_cases[0], 0)
+        result["last4deaths"] = last_4_week_deaths
+        result["last4cases"] = last_4_week_cases
+
         return result
