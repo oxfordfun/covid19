@@ -1,5 +1,6 @@
 # Covid19
 Show covid19 data, for example:  https://covid19.oxfordfun.com/countries
+(UK data is not included anymore.)
 
 ## Set up
 
@@ -45,9 +46,5 @@ python3 main.py data.json Europe > data/europe.json
 python3 webmain.py
 ```
 Data shown at http://127.0.0.1:6060/countries
-
-![Countries Data](data/Countries.png?raw=true "Countries")
-
-Data shown at http://127.0.0.1:6060/country/United%20Kingdom
 
 ![UK Data](data/UK.png?raw=true "UK")
